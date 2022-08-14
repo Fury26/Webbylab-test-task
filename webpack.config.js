@@ -20,9 +20,19 @@ module.exports = {
 		extensions: ['.tsx', '.ts', '.js'],
 	},
 	output: {
-		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
+		filename: 'bundle.js',
+		publicPath: '/',
 	},
+	devServer: {
+		historyApiFallback: true,
+		static: {
+			directory: path.join(__dirname, 'dist'),
+		},
+		port: 8080,
+		open: true,
+	},
+	mode: 'development',
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: './index.html',
