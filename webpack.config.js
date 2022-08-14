@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-require('dotenv').config();
 const path = require('path');
 
 module.exports = {
@@ -32,7 +31,7 @@ module.exports = {
 		static: {
 			directory: path.join(__dirname, 'dist'),
 		},
-		port: process.env.PORT,
+		port: 3000,
 		open: true,
 	},
 	mode: 'development',
