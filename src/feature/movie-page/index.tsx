@@ -26,7 +26,7 @@ const MoviePage = () => {
 	}
 
 	return (
-		<Flex height="100vh" justifyContent="center">
+		<Flex width="100%" justifyContent="center">
 			<Container marginTop={20}>
 				<Stack direction="column" border="1px" borderColor="gray.200" borderRadius="1rem" padding={4} position="relative">
 					<Box width="1px" height="100%" left="30%" position="absolute" backgroundColor="gray.200" top={0} />

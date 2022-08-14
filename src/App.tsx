@@ -5,6 +5,8 @@ import AddMovie from './feature/add-movie';
 import MoviePage from './feature/movie-page';
 import Register from './feature/register';
 import Login from './feature/login';
+import { Container, Stack } from '@chakra-ui/react';
+import NavBar from './feature/nav-bar';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -27,18 +29,21 @@ const App = () => {
 	console.log('isLogged', isLogged);
 
 	return (
-		<Routes>
-			<Route path="/register" element={<Register />} />
-			<Route path="/login" element={<Login />} />
-			{isLogged && (
-				<>
-					<Route path="/" element={<MoviesList />} />
-					<Route path="movie/new" element={<AddMovie />} />
-					<Route path="movie/:id" element={<MoviePage />} />
-				</>
-			)}
-			<Route path="*" element={<Navigate to={isLogged ? '/' : '/login'} />} />
-		</Routes>
+		<Stack alignItems="center">
+			<NavBar />
+			<Routes>
+				<Route path="/register" element={<Register />} />
+				<Route path="/login" element={<Login />} />
+				{isLogged && (
+					<>
+						<Route path="/" element={<MoviesList />} />
+						<Route path="movie/new" element={<AddMovie />} />
+						<Route path="movie/:id" element={<MoviePage />} />
+					</>
+				)}
+				<Route path="*" element={<Navigate to={isLogged ? '/' : '/login'} />} />
+			</Routes>
+		</Stack>
 	);
 };
 

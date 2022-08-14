@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-	FormControl,
 	FormLabel,
 	Input,
 	NumberInput,
@@ -71,7 +70,7 @@ const AddMovie = () => {
 		},
 	});
 	return (
-		<Flex height="100vh" justifyContent="center">
+		<Flex justifyContent="center" width="100%">
 			<Container marginTop={20}>
 				<form onSubmit={formik.handleSubmit}>
 					<Stack borderRadius="0.5rem" padding={5} background="cyan.50" spacing={5}>

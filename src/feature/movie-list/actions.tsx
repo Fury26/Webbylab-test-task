@@ -10,6 +10,8 @@ import { movieParamsToUrlParams, parseUrlQuery } from '../../helpers/parse-url-q
 
 type Props = {};
 
+const ACTOR_MIN_LENGTH = 3;
+
 const Actions: React.FC<Props> = () => {
 	const dispatch = useAppDispatch();
 	const { search: urlParams } = useLocation();
@@ -57,6 +59,7 @@ const Actions: React.FC<Props> = () => {
 					<Input
 						placeholder="Search by actor"
 						size="md"
+						isInvalid={actor?.length > 0 && actor?.length < ACTOR_MIN_LENGTH}
 						value={actor}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) => dispatch(updateFilter({ actor: e.target.value }))}
 					/>
