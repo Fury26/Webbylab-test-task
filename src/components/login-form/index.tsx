@@ -1,7 +1,8 @@
-import { FormControl, FormLabel, Input, FormHelperText, Button, Flex } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, Button, Flex, FormErrorMessage } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { loginValidationSchema } from './schema';
 
 export type LoginFormValues = {
 	name: string;
@@ -21,6 +22,7 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 			name: '',
 			password: '',
 		},
+		validationSchema: loginValidationSchema,
 		onSubmit: async (values) => {
 			await onSubmit(values);
 		},
@@ -29,17 +31,27 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 	return (
 		<form onSubmit={formik.handleSubmit}>
 			<FormControl width="100%" p={5} borderRadius="1rem">
-				<FormLabel>Email address</FormLabel>
-				<Input name="email" onChange={formik.handleChange} value={formik.values.email} type="email" />
+				<FormControl isInvalid={!!formik.errors.email && !!formik.values.email}>
+					<FormLabel>Email address</FormLabel>
+					<Input name="email" onChange={formik.handleChange} value={formik.values.email} type="email" />
+					<FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+				</FormControl>
+
 				{isRegistraion && (
 					<>
-						<FormLabel>Username</FormLabel>
-						<Input name="name" onChange={formik.handleChange} value={formik.values.name} type="text" />
+						<FormControl isInvalid={!!formik.errors.name && !!formik.values.name}>
+							<FormLabel>Username</FormLabel>
+							<Input name="name" onChange={formik.handleChange} value={formik.values.name} type="text" />
+							<FormErrorMessage>{formik.errors.name}</FormErrorMessage>
+						</FormControl>
 					</>
 				)}
 
-				<FormLabel>Password</FormLabel>
-				<Input name="password" onChange={formik.handleChange} value={formik.values.password} type="password" />
+				<FormControl isInvalid={isRegistraion && !!formik.errors.password && !!formik.values.password}>
+					<FormLabel>Password</FormLabel>
+					<Input name="password" onChange={formik.handleChange} value={formik.values.password} type="password" />
+					<FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+				</FormControl>
 
 				<Flex mt={4} gap={4} alignItems="center">
 					<Button isLoading={formik.isSubmitting} type="submit">

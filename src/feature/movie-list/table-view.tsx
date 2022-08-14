@@ -1,23 +1,19 @@
-import { TableContainer, Table, TableCaption, Thead, Tr, Th, Tbody, Td, Tfoot } from '@chakra-ui/react';
+import { TableContainer, Table, TableCaption, Thead, Tr, Th, Tbody } from '@chakra-ui/react';
 import React from 'react';
-import { deleteMovie } from '../../redux/movies';
+import LoadingSpinner from '../../components/spinner';
 import { Movie } from '../../redux/movies/types';
-import { useAppDispatch } from '../../redux/store';
 import TableRow from './table-row';
 
 type Props = {
 	movies: Movie[];
+	isLoading: boolean;
+	onDelete: (id: number | string) => void;
 };
 
-const TableView: React.FC<Props> = ({ movies }) => {
-	const dispatch = useAppDispatch();
-
-	const onDelete = async (id: number | string) => {
-		await dispatch(deleteMovie(id));
-	};
-
+const TableView: React.FC<Props> = ({ movies, isLoading, onDelete }) => {
 	return (
-		<TableContainer border="1px" borderColor="gray.200" borderRadius="1rem" p={4} mt={5}>
+		<TableContainer border="1px" borderColor="gray.200" borderRadius="1rem" p={4} mt={5} position="relative">
+			<LoadingSpinner isLoading={isLoading} isOnTop={true} />
 			<Table variant="striped" colorScheme="teal">
 				<TableCaption>Movies</TableCaption>
 				<Thead>

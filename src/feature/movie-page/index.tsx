@@ -51,7 +51,7 @@ const MoviePage = () => {
 								top="0"
 								onClick={() => setIsShowActors((prev) => !prev)}
 								cursor="pointer"
-								visibility={movie.actors?.length > 1 ? 'visible' : 'hidden'}
+								visibility={movie.actors && movie.actors.length > 1 ? 'visible' : 'hidden'}
 							>
 								{isShowActors ? <TriangleUpIcon /> : <TriangleDownIcon />}
 							</Box>

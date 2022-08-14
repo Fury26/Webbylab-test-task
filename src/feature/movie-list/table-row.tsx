@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Movie } from '../../redux/movies/types';
 import { DeleteIcon } from '@chakra-ui/icons';
-import RowSpinner from './row-spinner';
+import LoadingSpinner from '../../components/spinner';
 
 type Props = {
 	movie: Movie;
@@ -29,7 +29,7 @@ const TableRow: React.FC<Props> = ({ movie, onDelete }) => {
 			<Td isNumeric>{movie.year}</Td>
 			<Td>{movie.format}</Td>
 			<Td>
-				<RowSpinner isLoading={isLoading} />
+				<LoadingSpinner isLoading={isLoading} />
 				<Flex top={0} right={0} height="100%" justifyContent="center" cursor="pointer">
 					<DeleteIcon color="red.500" onClick={onDeleteHandler} />
 				</Flex>

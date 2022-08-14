@@ -3,9 +3,10 @@ import React from 'react';
 
 type Props = {
 	isLoading: boolean;
+	isOnTop?: boolean;
 };
 
-const RowSpinner: React.FC<Props> = ({ isLoading }) => {
+const LoadingSpinner: React.FC<Props> = ({ isLoading, isOnTop = false }) => {
 	if (!isLoading) {
 		return null;
 	}
@@ -17,13 +18,15 @@ const RowSpinner: React.FC<Props> = ({ isLoading }) => {
 			height="100%"
 			width="100%"
 			justifyContent="center"
-			alignItems="center"
+			alignItems={isOnTop ? 'flex-start' : 'center'}
 			background="gray.200"
 			opacity="0.7"
+			boxSizing="border-box"
+			paddingTop={isOnTop ? 20 : 0}
 		>
 			<Spinner />
 		</Flex>
 	);
 };
 
-export default RowSpinner;
+export default LoadingSpinner;

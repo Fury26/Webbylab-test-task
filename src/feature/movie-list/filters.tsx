@@ -12,7 +12,7 @@ type Props = {};
 
 const ACTOR_MIN_LENGTH = 3;
 
-const Actions: React.FC<Props> = () => {
+const Filters: React.FC<Props> = () => {
 	const dispatch = useAppDispatch();
 	const { search: urlParams } = useLocation();
 	const [searchParams, setSearchParams] = useSearchParams(parseUrlQuery(urlParams));
@@ -31,7 +31,9 @@ const Actions: React.FC<Props> = () => {
 
 	useEffect(() => {
 		const parsedParams = parseUrlQuery(urlParams);
-		if (!Object.keys(parsedParams)) {
+
+		if (!Object.keys(parsedParams).length) {
+			dispatch(getMovies({}));
 			return;
 		}
 		dispatch(updateFilter(parsedParams));
@@ -55,11 +57,11 @@ const Actions: React.FC<Props> = () => {
 	return (
 		<Stack>
 			<Flex>
-				<Stack flexGrow={1}>
+				<Stack flexGrow={1} justifyContent="center">
 					<Input
 						placeholder="Search by actor"
 						size="md"
-						isInvalid={actor?.length > 0 && actor?.length < ACTOR_MIN_LENGTH}
+						isInvalid={!!actor && actor.length > 0 && actor.length < ACTOR_MIN_LENGTH}
 						value={actor}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) => dispatch(updateFilter({ actor: e.target.value }))}
 					/>
@@ -98,4 +100,4 @@ const Actions: React.FC<Props> = () => {
 	);
 };
 
-export default Actions;
+export default Filters;

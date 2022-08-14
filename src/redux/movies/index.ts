@@ -18,11 +18,6 @@ const initialState: MoviesState = {
 	filters: { actor: '', title: '' },
 };
 
-// export const getMovies = createAsyncThunk('movies/get', async (params: MoviesParams) => {
-// 	const res = await fetchMovies(params);
-// 	return res;
-// });
-
 export const moviesSlice = createSlice({
 	name: 'movies',
 	initialState,
@@ -55,11 +50,6 @@ export const moviesSlice = createSlice({
 			state.filters = initialState.filters;
 		},
 	},
-	// extraReducers: (builder) => {
-	// 	builder.addCase(getMovies.fulfilled, (state: MoviesState, action: PayloadAction<Movie[]>) => {
-	// 		state.movies = action.payload;
-	// 	});
-	// },
 });
 
 export const { addMovie, addMovies, remove, setMovies, setIsLoading, setCurrentMovieId, clearFilter, updateFilter } =

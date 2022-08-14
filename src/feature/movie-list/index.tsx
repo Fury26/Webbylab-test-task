@@ -1,26 +1,23 @@
 import { Container, Stack } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { getMovies } from '../../redux/movies';
+import { deleteMovie } from '../../redux/movies';
 import { RootState, useAppDispatch } from '../../redux/store';
-import Actions from './actions';
+import Filters from './filters';
 import TableView from './table-view';
 const MoviesList = () => {
+	const { movies, isLoading } = useSelector((state: RootState) => state.movies);
 	const dispatch = useAppDispatch();
 
-	const movies = useSelector((state: RootState) => state.movies.movies);
-
-	useEffect(() => {
-		console.log('get movies');
-
-		dispatch(getMovies({}));
-	}, []);
+	const onDelete = async (id: number | string) => {
+		await dispatch(deleteMovie(id));
+	};
 
 	return (
 		<Container>
 			<Stack direction="column" mt={4} spacing={4}>
-				<Actions />
-				<TableView movies={movies} />
+				<Filters />
+				<TableView movies={movies} isLoading={isLoading} onDelete={onDelete} />
 			</Stack>
 		</Container>
 	);

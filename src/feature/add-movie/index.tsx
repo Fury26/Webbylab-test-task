@@ -14,23 +14,12 @@ import {
 	Button,
 	FormErrorMessage,
 	useToast,
+	FormControl,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useAppDispatch } from '../../redux/store';
 import { createMovie } from '../../redux/movies';
-
-import * as Yup from 'yup';
-
-const MIN_YEAR = 1080;
-const MAX_YEAR = 2021;
-
-const validationSchema = Yup.object().shape({
-	title: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-	format: Yup.string()
-		.matches(/VHC|Blu-Ray|DVD/, 'Wrong Type')
-		.required('Required'),
-	year: Yup.number().max(MAX_YEAR, 'Too far into the future').min(MIN_YEAR, 'Too long ago').required('Required'),
-});
+import { MAX_YEAR, MIN_YEAR, validationSchema } from './schema';
 
 const AddMovie = () => {
 	const dispatch = useAppDispatch();
@@ -63,24 +52,34 @@ const AddMovie = () => {
 								isClosable: true,
 							});
 						},
+						error: () => {
+							toast({
+								position: 'top',
+								title: 'Error!',
+								description: 'Something went wrong.',
+								status: 'error',
+								duration: 3000,
+								isClosable: true,
+							});
+						},
 					},
 				),
 			);
-			return;
 		},
 	});
+
 	return (
 		<Flex justifyContent="center" width="100%">
 			<Container marginTop={20}>
 				<form onSubmit={formik.handleSubmit}>
 					<Stack borderRadius="0.5rem" padding={5} background="cyan.50" spacing={5}>
-						<Stack direction="column" spacing={0}>
+						<FormControl isInvalid={!!formik.errors.title}>
 							<FormLabel>Movie Title</FormLabel>
 							<Input name="title" type="text" value={formik.values.title} onChange={formik.handleChange} />
 							<FormErrorMessage>{formik.errors.title}</FormErrorMessage>
-						</Stack>
+						</FormControl>
 
-						<Stack direction="column" spacing={0}>
+						<FormControl isInvalid={!!formik.errors.year}>
 							<FormLabel>Release Year</FormLabel>
 							<NumberInput
 								max={MAX_YEAR}
@@ -95,17 +94,18 @@ const AddMovie = () => {
 									<NumberDecrementStepper />
 								</NumberInputStepper>
 							</NumberInput>
-						</Stack>
-						<Stack direction="column" spacing={0}>
+							<FormErrorMessage>{formik.errors.year}</FormErrorMessage>
+						</FormControl>
+						<FormControl>
 							<FormLabel>Format</FormLabel>
 							<Select name="format" value={formik.values.format} onChange={formik.handleChange}>
 								<option>VHC</option>
 								<option>Blu-Ray</option>
 								<option>DVD</option>
 							</Select>
-						</Stack>
+						</FormControl>
 
-						<Stack direction="column" spacing={0}>
+						<FormControl>
 							<FormLabel>Actors</FormLabel>
 							<Input
 								type="text"
@@ -114,8 +114,15 @@ const AddMovie = () => {
 								value={formik.values.actors}
 								onChange={formik.handleChange}
 							/>
-						</Stack>
-						<Button width="60%" alignSelf="center" colorScheme="teal" type="submit" isLoading={formik.isSubmitting}>
+						</FormControl>
+						<Button
+							disabled={!formik.isValid}
+							width="60%"
+							alignSelf="center"
+							colorScheme="teal"
+							type="submit"
+							isLoading={formik.isSubmitting}
+						>
 							Add
 						</Button>
 					</Stack>
