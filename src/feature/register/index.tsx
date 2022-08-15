@@ -10,7 +10,6 @@ const Register = () => {
 
 	const onRegister = async (values: LoginFormValues) => {
 		const res = await register({ ...values, confirmPassword: values.password });
-		console.log('res', res);
 
 		if (res.token) {
 			localStorage.setItem('token', res.token);

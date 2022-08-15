@@ -13,7 +13,8 @@ const TableRow: React.FC<Props> = ({ movie, onDelete }) => {
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const onDeleteHandler = async () => {
+	const onDeleteHandler = async (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 		setIsLoading(true);
 		await onDelete(movie.id);
 		setIsLoading(false);
@@ -24,14 +25,14 @@ const TableRow: React.FC<Props> = ({ movie, onDelete }) => {
 	};
 
 	return (
-		<Tr position="relative" onClick={showMoviePage}>
+		<Tr position="relative" cursor="pointer" onClick={showMoviePage}>
 			<Td>{movie.title}</Td>
 			<Td isNumeric>{movie.year}</Td>
 			<Td>{movie.format}</Td>
 			<Td>
 				<LoadingSpinner isLoading={isLoading} />
-				<Flex top={0} right={0} height="100%" justifyContent="center" cursor="pointer">
-					<DeleteIcon color="red.500" onClick={onDeleteHandler} />
+				<Flex top={0} right={0} height="100%" justifyContent="center" cursor="pointer" onClick={onDeleteHandler}>
+					<DeleteIcon color="red.500" />
 				</Flex>
 			</Td>
 		</Tr>

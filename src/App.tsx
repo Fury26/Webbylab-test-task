@@ -13,7 +13,6 @@ const App = () => {
 	const token = localStorage.getItem('token');
 
 	const logout = () => {
-		console.log('logouting');
 		localStorage.removeItem('token');
 		navigate('/');
 	};
@@ -26,10 +25,9 @@ const App = () => {
 	}, []);
 
 	const isLogged = !!(token && token !== 'undefined');
-	console.log('isLogged', isLogged);
 
 	return (
-		<Stack alignItems="center">
+		<Stack alignItems="center" overflow="hidden" height="100vh">
 			<NavBar />
 			<Routes>
 				<Route path="/register" element={<Register />} />

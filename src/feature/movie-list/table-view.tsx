@@ -15,7 +15,7 @@ const TableView: React.FC<Props> = ({ movies, isLoading, onDelete }) => {
 		<TableContainer border="1px" borderColor="gray.200" borderRadius="1rem" p={4} mt={5} position="relative">
 			<LoadingSpinner isLoading={isLoading} isOnTop={true} />
 			<Table variant="striped" colorScheme="teal">
-				<TableCaption>Movies</TableCaption>
+				<TableCaption>Movies List</TableCaption>
 				<Thead>
 					<Tr>
 						<Th>Title</Th>

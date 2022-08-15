@@ -3,6 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NavBar: React.FC = () => {
+	const onLoggout = () => {
+		window.dispatchEvent(new window.Event('loggout'));
+	};
+
 	return (
 		<Flex
 			width="100vw"
@@ -16,7 +20,7 @@ const NavBar: React.FC = () => {
 			<Link to="/">Home</Link>
 			<Flex gap={4}>
 				<Link to="/login">Login</Link>
-				<Button variant="link" colorScheme="red">
+				<Button variant="link" colorScheme="red" onClick={onLoggout}>
 					Logout
 				</Button>
 			</Flex>

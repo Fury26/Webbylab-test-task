@@ -33,7 +33,13 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 			<FormControl width="100%" p={5} borderRadius="1rem">
 				<FormControl isInvalid={!!formik.errors.email && !!formik.values.email}>
 					<FormLabel>Email address</FormLabel>
-					<Input name="email" onChange={formik.handleChange} value={formik.values.email} type="email" />
+					<Input
+						autoComplete="email"
+						name="email"
+						onChange={formik.handleChange}
+						value={formik.values.email}
+						type="email"
+					/>
 					<FormErrorMessage>{formik.errors.email}</FormErrorMessage>
 				</FormControl>
 
@@ -41,7 +47,13 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 					<>
 						<FormControl isInvalid={!!formik.errors.name && !!formik.values.name}>
 							<FormLabel>Username</FormLabel>
-							<Input name="name" onChange={formik.handleChange} value={formik.values.name} type="text" />
+							<Input
+								autoComplete="username"
+								name="name"
+								onChange={formik.handleChange}
+								value={formik.values.name}
+								type="text"
+							/>
 							<FormErrorMessage>{formik.errors.name}</FormErrorMessage>
 						</FormControl>
 					</>
@@ -49,7 +61,13 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 
 				<FormControl isInvalid={isRegistraion && !!formik.errors.password && !!formik.values.password}>
 					<FormLabel>Password</FormLabel>
-					<Input name="password" onChange={formik.handleChange} value={formik.values.password} type="password" />
+					<Input
+						name="password"
+						onChange={formik.handleChange}
+						value={formik.values.password}
+						type="password"
+						autoComplete="current-password"
+					/>
 					<FormErrorMessage>{formik.errors.password}</FormErrorMessage>
 				</FormControl>
 

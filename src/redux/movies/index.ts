@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createNewMovie, fetchMovieById, fetchMovies, removeMovie } from '../../requests/movies';
+import { createNewMovie, fetchImportMovies, fetchMovieById, fetchMovies, removeMovie } from '../../requests/movies';
 import { CreateMovieType, FetchCallbacks, Movie, MoviesParams } from './types';
 import { AppDispatch } from '../store';
 
@@ -106,6 +106,21 @@ export const loadCurrentMovie =
 		dispatch(setIsLoading(false));
 		if (res) {
 			dispatch(setCurrentMovieId(res));
+			success && success();
+		} else {
+			error && error();
+		}
+	};
+
+export const importMovies =
+	(movies: FormData, { success, error }: FetchCallbacks = {}) =>
+	async (dispatch: AppDispatch) => {
+		dispatch(setIsLoading(true));
+
+		const res = await fetchImportMovies(movies);
+		dispatch(setIsLoading(false));
+		if (res) {
+			dispatch(addMovies(res));
 			success && success();
 		} else {
 			error && error();

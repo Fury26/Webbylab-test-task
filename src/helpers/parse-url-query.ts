@@ -2,7 +2,6 @@ import { MoviesParams } from '../redux/movies/types';
 
 export const parseUrlQuery = (search: string) => {
 	const values = search.substring(1).split('&');
-	console.log('values', values);
 
 	const obj: { [key: string]: string } = {};
 

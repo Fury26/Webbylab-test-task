@@ -22,6 +22,15 @@ export const createNewMovie = async (movie: CreateMovieType): Promise<Movie | nu
 	return res.data.data || null;
 };
 
+export const fetchImportMovies = async (formData: FormData): Promise<Movie[] | null> => {
+	type ResType = {
+		data?: Movie[];
+		error?: any;
+	};
+	const res = await axiosInstance.post<ResType>('movies/import', formData);
+	return res.data.data || null;
+};
+
 export const removeMovie = async (id: number | string): Promise<boolean> => {
 	type ResType = {
 		status: number;

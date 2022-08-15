@@ -10,7 +10,6 @@ const Login = () => {
 
 	const onLogin = async (values: LoginFormValues) => {
 		const res = await login(values);
-		console.log('res', res);
 
 		if (res.token) {
 			localStorage.setItem('token', res.token);
