@@ -43,20 +43,19 @@ const Filters: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
+		setActorState(actor);
+		setTitleState(title);
 		if (isFirstLoad.current) {
 			isFirstLoad.current = false;
 			return;
 		}
 
 		search();
-		setActorState(actor);
-		setTitleState(title);
 	}, [actor, order, title]);
 
 	const onClear = () => {
 		setSearchParams({});
 		dispatch(clearFilter());
-		dispatch(getMovies({}));
 	};
 
 	return (
