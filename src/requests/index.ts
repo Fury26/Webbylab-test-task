@@ -4,10 +4,16 @@ import { getAuthToken } from '../helpers/auth-helpers';
 const axiosInstance = axios.create({
 	baseURL: process.env.API_URL,
 	timeout: 5000,
-	headers: {
-		Authorization: getAuthToken(),
-	},
 });
+
+export const updateAuthHeader = () => {
+	axiosInstance.defaults.headers.common.Authorization = getAuthToken();
+};
+
+export const setAuthToken = (token: string) => {
+	localStorage.setItem('token', token);
+	updateAuthHeader();
+};
 
 axiosInstance.interceptors.response.use(
 	(response) => {

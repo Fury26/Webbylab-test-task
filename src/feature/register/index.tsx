@@ -3,6 +3,7 @@ import React from 'react';
 import LoginForm, { LoginFormValues } from '../../components/login-form';
 import { register } from '../../requests/auth';
 import { useNavigate } from 'react-router-dom';
+import { setAuthToken } from '../../requests';
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Register = () => {
 		const res = await register({ ...values, confirmPassword: values.password });
 
 		if (res.token) {
-			localStorage.setItem('token', res.token);
+			setAuthToken(res.token);
 			navigate('/');
 			return;
 		}

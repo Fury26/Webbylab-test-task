@@ -8,6 +8,7 @@ export const fetchMovies = async (params: MoviesParams): Promise<Movie[]> => {
 		status?: number;
 		error?: any;
 	};
+
 	const res = await axiosInstance.get<ResType>('movies', { params });
 
 	return res.data?.data || [];

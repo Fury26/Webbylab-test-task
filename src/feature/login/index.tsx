@@ -3,6 +3,7 @@ import { Container, useToast } from '@chakra-ui/react';
 import LoginForm, { LoginFormValues } from '../../components/login-form';
 import { login } from '../../requests/auth';
 import { useNavigate } from 'react-router-dom';
+import { setAuthToken } from '../../requests';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Login = () => {
 		const res = await login(values);
 
 		if (res.token) {
-			localStorage.setItem('token', res.token);
+			setAuthToken(res.token);
 			navigate('/');
 			return;
 		}

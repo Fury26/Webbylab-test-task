@@ -7,6 +7,7 @@ import Register from './feature/register';
 import Login from './feature/login';
 import { Container, Stack } from '@chakra-ui/react';
 import NavBar from './feature/nav-bar';
+import { updateAuthHeader } from './requests';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -14,6 +15,7 @@ const App = () => {
 
 	const logout = () => {
 		localStorage.removeItem('token');
+		updateAuthHeader();
 		navigate('/');
 	};
 
