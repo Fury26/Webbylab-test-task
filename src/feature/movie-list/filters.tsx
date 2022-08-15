@@ -1,28 +1,32 @@
 import { Button, Flex, Input, Stack } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
-import { AddIcon, ChevronUpIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { ChevronUpIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { clearFilter, getMovies, updateFilter } from '../../redux/movies';
 import { useSelector } from 'react-redux';
 import { getCorrectMovieParams } from '../../helpers/get-correct-movie-params';
 import { movieParamsToUrlParams, parseUrlQuery } from '../../helpers/parse-url-query';
 
-type Props = {};
-
-const ACTOR_MIN_LENGTH = 3;
-
-const Filters: React.FC<Props> = () => {
+const Filters: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { search: urlParams } = useLocation();
-	const [searchParams, setSearchParams] = useSearchParams(parseUrlQuery(urlParams));
+	const [, setSearchParams] = useSearchParams(parseUrlQuery(urlParams));
 	const { actor, order, title } = useSelector((state: RootState) => state.movies.filters);
+	const isFirstLoad = useRef(true);
 
-	const searchOnClick = () => {
+	const [actorState, setActorState] = useState(actor);
+	const [titleState, setTitleState] = useState(actor);
+
+	const search = () => {
 		const params = getCorrectMovieParams({ actor, order, title });
 
 		dispatch(getMovies(params));
 		setSearchParams(movieParamsToUrlParams(params));
+	};
+
+	const searchOnClick = () => {
+		dispatch(updateFilter({ actor: actorState, title: titleState }));
 	};
 
 	const changeOrder = (val: 'ASC' | 'DESC') => {
@@ -31,22 +35,23 @@ const Filters: React.FC<Props> = () => {
 
 	useEffect(() => {
 		const parsedParams = parseUrlQuery(urlParams);
-
 		if (!Object.keys(parsedParams).length) {
-			dispatch(getMovies({}));
+			search();
 			return;
 		}
 		dispatch(updateFilter(parsedParams));
 	}, []);
 
 	useEffect(() => {
-		if (!order) {
+		if (isFirstLoad.current) {
+			isFirstLoad.current = false;
 			return;
 		}
-		const params = getCorrectMovieParams({ actor, order, title });
-		setSearchParams(movieParamsToUrlParams(params));
-		dispatch(getMovies(getCorrectMovieParams(params)));
-	}, [order]);
+
+		search();
+		setActorState(actor);
+		setTitleState(title);
+	}, [actor, order, title]);
 
 	const onClear = () => {
 		setSearchParams({});
@@ -61,22 +66,20 @@ const Filters: React.FC<Props> = () => {
 					<Input
 						placeholder="Search by actor"
 						size="md"
-						isInvalid={!!actor && actor.length > 0 && actor.length < ACTOR_MIN_LENGTH}
-						value={actor}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => dispatch(updateFilter({ actor: e.target.value }))}
+						value={actorState}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => setActorState(e.target.value)}
 					/>
 					<Input
 						placeholder="Search by title"
 						size="md"
-						value={title}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => dispatch(updateFilter({ title: e.target.value }))}
+						value={titleState}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitleState(e.target.value)}
 					/>
 				</Stack>
 				<Button onClick={searchOnClick} ml={4} variant="solid" colorScheme="teal">
 					Search
 				</Button>
 			</Flex>
-			<Flex></Flex>
 			<Stack direction="row" spacing={3} justifyContent="space-between">
 				<Flex gap={4}>
 					<Button leftIcon={<ChevronUpIcon />} onClick={() => changeOrder('ASC')}>
@@ -89,12 +92,6 @@ const Filters: React.FC<Props> = () => {
 						Clear
 					</Button>
 				</Flex>
-
-				<Link to="movie/new">
-					<Button ml={4} variant="solid" colorScheme="teal" leftIcon={<AddIcon />}>
-						Add
-					</Button>
-				</Link>
 			</Stack>
 		</Stack>
 	);

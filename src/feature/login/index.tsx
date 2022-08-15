@@ -1,5 +1,5 @@
-import { Container, useToast } from '@chakra-ui/react';
 import React from 'react';
+import { Container, useToast } from '@chakra-ui/react';
 import LoginForm, { LoginFormValues } from '../../components/login-form';
 import { login } from '../../requests/auth';
 import { useNavigate } from 'react-router-dom';
@@ -17,10 +17,12 @@ const Login = () => {
 			return;
 		}
 
+		const description = res.error?.code === 'AUTHENTICATION_FAILED' ? 'Wrond email or password' : 'Ops. Someting went wrong.';
+
 		toast({
 			position: 'top',
 			title: 'Error!',
-			description: 'Ops. Someting went wrong.',
+			description,
 			status: 'error',
 			duration: 3000,
 			isClosable: true,
