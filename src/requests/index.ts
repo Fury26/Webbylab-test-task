@@ -18,6 +18,7 @@ export const setAuthToken = (token: string) => {
 axiosInstance.interceptors.response.use(
 	(response) => {
 		if (response.data?.error?.fields?.token) {
+			console.log('res', response.data.error);
 			const loggoutEvent = new window.Event('loggout');
 			window.dispatchEvent(loggoutEvent);
 		}
@@ -31,5 +32,7 @@ axiosInstance.interceptors.response.use(
 		return Promise.reject(error);
 	},
 );
+
+updateAuthHeader();
 
 export default axiosInstance;
