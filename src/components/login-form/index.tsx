@@ -24,7 +24,7 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 		},
 		validationSchema: loginValidationSchema(isRegistraion),
 		onSubmit: async (values, e) => {
-			await onSubmit(values, e);
+			await onSubmit({ ...values, email: values.email.trim(), name: values.name.trim() }, e);
 		},
 	});
 

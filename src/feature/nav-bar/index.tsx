@@ -1,15 +1,11 @@
 import { Button, Flex } from '@chakra-ui/react';
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const NavBar: React.FC = () => {
-	const location = useLocation();
-
 	const onLoggout = () => {
 		window.dispatchEvent(new window.Event('loggout'));
 	};
-
-	const homeLink = '/';
 
 	return (
 		<Flex
@@ -21,7 +17,7 @@ const NavBar: React.FC = () => {
 			justifyContent="space-between"
 			alignContent="center"
 		>
-			<Link to={homeLink} reloadDocument={location.pathname === homeLink}>
+			<Link to="/" reloadDocument>
 				Home
 			</Link>
 			<Flex gap={4}>

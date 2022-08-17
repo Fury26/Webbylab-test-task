@@ -17,6 +17,7 @@ const LoadingSpinner: React.FC<Props> = ({ isLoading, isOnTop = false }) => {
 			top="0"
 			height="100%"
 			width="100%"
+			zIndex={2}
 			justifyContent="center"
 			alignItems={isOnTop ? 'flex-start' : 'center'}
 			background="gray.200"

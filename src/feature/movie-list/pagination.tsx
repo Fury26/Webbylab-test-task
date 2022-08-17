@@ -18,7 +18,7 @@ const Pagination = () => {
 		dispatch(updateFilter({ offset: newOffset }));
 	};
 
-	if (total < PER_PAGE) {
+	if (total <= PER_PAGE) {
 		return null;
 	}
 

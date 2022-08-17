@@ -27,8 +27,8 @@ const MoviesList = () => {
 	};
 
 	return (
-		<Stack flexGrow={1} overflowY="scroll" width="100%" alignItems="center" style={{ marginTop: 0 }}>
-			<Stack mt={4} spacing={4} width="75%" maxWidth="1100px">
+		<Stack flexGrow={1} overflowY="auto" width="100%" alignItems="center" style={{ marginTop: 0 }}>
+			<Stack mt={4} spacing={4} width="75%" maxWidth="1100px" pb={4}>
 				<Filters />
 				<Actions />
 				<Pagination />
