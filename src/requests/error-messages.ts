@@ -13,6 +13,7 @@ export const ERROR_MESSAGES = {
 		},
 		year: {
 			TOO_LOW: 'This date is to old',
+			TOO_HIGH: 'This date is to far into the future',
 		},
 		password: {
 			AUTHENTICATION_FAILED: 'Wrong email or password',
@@ -28,7 +29,7 @@ export type Errors = {
 	fields: {
 		title?: 'NOT_UNIQUE';
 		name?: 'REQUIRED';
-		year?: 'TOO_LOW';
+		year?: 'TOO_LOW' | 'TOO_HIGH';
 		password?: 'AUTHENTICATION_FAILED' | 'REQUIRED';
 		email?: 'NOT_UNIQUE' | 'AUTHENTICATION_FAILED' | 'REQUIRED';
 	};

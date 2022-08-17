@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const MIN_YEAR = 1080;
+export const MIN_YEAR = 1800;
 export const MAX_YEAR = 2021;
 const TITLE_MIN_LENGTH = 3;
 const TITLE_MAX_LENGTH = 50;
