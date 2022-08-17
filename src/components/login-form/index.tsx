@@ -1,5 +1,5 @@
 import { FormControl, FormLabel, Input, Button, Flex, FormErrorMessage } from '@chakra-ui/react';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { loginValidationSchema } from './schema';
@@ -12,7 +12,7 @@ export type LoginFormValues = {
 
 type Props = {
 	isRegistraion?: boolean;
-	onSubmit: (values: LoginFormValues) => any;
+	onSubmit: (values: LoginFormValues, helpers: FormikHelpers<LoginFormValues>) => any;
 };
 
 const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
@@ -22,16 +22,16 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 			name: '',
 			password: '',
 		},
-		validationSchema: loginValidationSchema,
-		onSubmit: async (values) => {
-			await onSubmit(values);
+		validationSchema: loginValidationSchema(isRegistraion),
+		onSubmit: async (values, e) => {
+			await onSubmit(values, e);
 		},
 	});
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
 			<FormControl width="100%" p={5} borderRadius="1rem">
-				<FormControl isInvalid={!!formik.errors.email && !!formik.values.email}>
+				<FormControl isInvalid={!!formik.errors.email && !!formik.values.email} isRequired={isRegistraion}>
 					<FormLabel>Email address</FormLabel>
 					<Input
 						autoComplete="email"
@@ -45,7 +45,7 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 
 				{isRegistraion && (
 					<>
-						<FormControl isInvalid={!!formik.errors.name && !!formik.values.name}>
+						<FormControl isInvalid={!!formik.errors.name} isRequired={isRegistraion}>
 							<FormLabel>Username</FormLabel>
 							<Input
 								autoComplete="username"
@@ -59,7 +59,7 @@ const LoginForm: React.FC<Props> = ({ isRegistraion = false, onSubmit }) => {
 					</>
 				)}
 
-				<FormControl isInvalid={isRegistraion && !!formik.errors.password && !!formik.values.password}>
+				<FormControl isInvalid={!!formik.errors.password && !!formik.values.password} isRequired={isRegistraion}>
 					<FormLabel>Password</FormLabel>
 					<Input
 						name="password"

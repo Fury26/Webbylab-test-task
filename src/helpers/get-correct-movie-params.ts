@@ -11,5 +11,8 @@ export const getCorrectMovieParams = (params: MoviesParams) => {
 	if (params.order) {
 		newParams.order = params.order;
 	}
+	if (params.offset) {
+		newParams.offset = +params.offset;
+	}
 	return newParams;
 };

@@ -1,3 +1,5 @@
+import { Errors } from '../../requests/error-messages';
+
 export type Movie = {
 	id: string | number;
 	title: string;
@@ -30,5 +32,5 @@ export type MoviesParams = {
 
 export type FetchCallbacks = {
 	success?: () => any;
-	error?: () => any;
+	error?: (errors: Errors) => any;
 };

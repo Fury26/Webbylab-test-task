@@ -20,11 +20,15 @@ import { useFormik } from 'formik';
 import { useAppDispatch } from '../../redux/store';
 import { createMovie } from '../../redux/movies';
 import { MAX_YEAR, MIN_YEAR, validationSchema } from './schema';
+import { getResponseErrors } from '../../helpers/map-errors';
+
+type FormValues = { title: string; year: number; format: 'VHS' | 'Blu-Ray' | 'DVD'; actors: string };
 
 const AddMovie = () => {
 	const dispatch = useAppDispatch();
 	const toast = useToast();
-	const formik = useFormik<{ title: string; year: number; format: 'VHS' | 'Blu-Ray' | 'DVD'; actors: string }>({
+
+	const formik = useFormik<FormValues>({
 		initialValues: {
 			title: '',
 			year: 2000,
@@ -32,13 +36,13 @@ const AddMovie = () => {
 			actors: '',
 		},
 		validationSchema,
-		onSubmit: async (values) => {
+		onSubmit: async (values, { setErrors }) => {
 			await dispatch(
 				createMovie(
 					{
 						...values,
-						format: values.format,
-						actors: values.actors.split(','),
+						title: values.title.trim(),
+						actors: values.actors.trim().split(','),
 					},
 					{
 						success: () => {
@@ -52,15 +56,8 @@ const AddMovie = () => {
 								isClosable: true,
 							});
 						},
-						error: () => {
-							toast({
-								position: 'top',
-								title: 'Error!',
-								description: 'Something went wrong.',
-								status: 'error',
-								duration: 3000,
-								isClosable: true,
-							});
+						error: (err) => {
+							setErrors(getResponseErrors<FormValues>(err));
 						},
 					},
 				),

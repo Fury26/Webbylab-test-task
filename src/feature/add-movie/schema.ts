@@ -6,7 +6,7 @@ const TITLE_MIN_LENGTH = 3;
 const TITLE_MAX_LENGTH = 50;
 
 export const validationSchema = Yup.object().shape({
-	title: Yup.string().min(TITLE_MIN_LENGTH, 'Too Short!').max(TITLE_MAX_LENGTH, 'Too Long!').required('Required'),
+	title: Yup.string().min(TITLE_MIN_LENGTH, 'Too Short!').max(TITLE_MAX_LENGTH, 'Too Long!').trim().required('Required'),
 	format: Yup.string()
 		.matches(/VHC|Blu-Ray|DVD/, 'Wrong Type')
 		.required('Required'),

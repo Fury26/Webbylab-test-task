@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { getAuthToken } from '../helpers/auth-helpers';
 
+export type CommonResType = {
+	status?: number;
+	error?: any;
+};
+
 const axiosInstance = axios.create({
 	baseURL: process.env.API_URL,
 	timeout: 5000,

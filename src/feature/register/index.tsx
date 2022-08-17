@@ -1,15 +1,17 @@
-import { Container, useToast } from '@chakra-ui/react';
 import React from 'react';
+import { Container, useToast } from '@chakra-ui/react';
 import LoginForm, { LoginFormValues } from '../../components/login-form';
 import { register } from '../../requests/auth';
 import { useNavigate } from 'react-router-dom';
 import { setAuthToken } from '../../requests';
+import { getResponseErrors } from '../../helpers/map-errors';
+import { FormikHelpers } from 'formik';
 
 const Register = () => {
 	const navigate = useNavigate();
 	const toast = useToast();
 
-	const onRegister = async (values: LoginFormValues) => {
+	const onRegister = async (values: LoginFormValues, { setErrors }: FormikHelpers<LoginFormValues>) => {
 		const res = await register({ ...values, confirmPassword: values.password });
 
 		if (res.token) {
@@ -17,15 +19,7 @@ const Register = () => {
 			navigate('/');
 			return;
 		}
-
-		toast({
-			position: 'top',
-			title: 'Error!',
-			description: 'Ops. Someting went wrong.',
-			status: 'error',
-			duration: 3000,
-			isClosable: true,
-		});
+		setErrors(getResponseErrors(res.error));
 	};
 
 	return (

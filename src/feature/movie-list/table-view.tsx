@@ -7,7 +7,7 @@ import TableRow from './table-row';
 type Props = {
 	movies: Movie[];
 	isLoading: boolean;
-	onDelete: (id: number | string) => void;
+	onDelete: (movie: Movie) => void;
 };
 
 const TableView: React.FC<Props> = ({ movies, isLoading, onDelete }) => {
